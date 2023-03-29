@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bookmarks</title>
+    <link rel="stylesheet" href="bookmarks.css">
+</head>
+
+<body class="body-ai body-ai">
+
+    <div class="content">
+        <div class="container" id="bookmarks">
+            <div class="row" style="display:flex;flex-direction: row;">
+                <div class="sidebar">
+                    <div class="content-sidebar fixed">
+                        <dl id="bookmarks-mark">
+                        </dl>
+                    </div>
+                </div>
+                <div class="main">
+                    <div class="search-fixed" style="margin-top:20px;">
+                        <div class="search-box">
+                            <input type="text" class="search-input" id="searchInput" placeholder="请输入搜索书签关键字">
+                            <button class="search-btn" id="searchBox">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="bookmarks-contents"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="bookmarks.js"></script>
+</body>
+
+</html>

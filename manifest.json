@@ -1,0 +1,62 @@
+{
+    "name": "Bookmark HTMLizer",
+    "version": "1.0",
+    "manifest_version": 2,
+    "description": "Bookmark HTMLizer可以将您的书签内容转换为网页形式，使得您可以更方便地检索和浏览书签内容。",
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "storage",
+        "bookmarks",
+        "commands",
+        "favicon",
+        "chrome://favicon/"
+    ],
+    "host_permissions": [
+        "https://*/*",
+        "http://*/*",
+        "chrome://favicon/*",
+        "chrome://extensions/*"
+    ],
+    "options_page": "options.html",
+    "icons": {
+        "16": "images/icon16.png",
+        "32": "images/icon32.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ],
+    "browser_action": {
+        "default_icon": "images/icon32.png",
+        "default_popup": "bookmarks.html"
+    },
+    "web_accessible_resources": [
+        "images/*",
+        "scripts/*",
+        "styles/*",
+        "bookmarks.html"
+    ],
+    "background": {
+        "scripts": [
+            "background.js"
+        ]
+    },
+    "commands": {
+        "activate_extension": {
+            "suggested_key": {
+                "default": "Alt+Shift+D",
+                "mac": "Alt+Shift+D"
+            },
+            "description": "open in new tabs"
+        }
+    }
+}
