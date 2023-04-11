@@ -5,8 +5,7 @@
     "description": "Bookmark HTMLizer可以将您的书签内容转换为网页形式，使得您可以更方便地检索和浏览书签内容。",
     "permissions": [
         "storage",
-        "bookmarks",
-        "commands"
+        "bookmarks"
     ],
     "action": {
         "default_icon": "images/icon32.png",
