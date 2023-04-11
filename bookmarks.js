@@ -6,8 +6,6 @@ chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
     // 获取所有标签
     var bookmarks = bookmarkTreeNodes[0];
 
-    console.log(bookmarks);
-
     var bookmarksContents = document.getElementById('bookmarks-contents');
     bookmarks.title = "";
 
@@ -21,7 +19,8 @@ chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
     allImgsSetOnErrorEvent();
     //添加滚动事件
     addScrollEventListener();
-
+    //添加移除标签事件
+    addRemoveBookmarkListener();
     // 添加搜索输入框的监听器，根据输入过滤书签
     var searchBox = document.getElementById("searchBox");
     searchBox.addEventListener("click", function() {
@@ -37,7 +36,7 @@ chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
         }
     });
 
-    addRemoveBookmarkListener();
+
 });
 
 function searchReload() {
@@ -59,8 +58,10 @@ function searchReload() {
         bookmarksMark.innerHTML = createBookmarkMarks();
         // 全局设置img onerror事件
         allImgsSetOnErrorEvent();
-
+        //添加滑动事件
         addScrollEventListener();
+        //添加移除标签事件
+        addRemoveBookmarkListener();
     });
 }
 
@@ -170,7 +171,7 @@ function createBookmarkTree(bookmarks, parentName) {
     html += `</div></div></div>`;
 
     // 过滤元素为空的html
-    if (!hasHtml) {
+    if (!hasHtml && bookmarks.title!="没有匹配的书签") {
         html = "";
     }
     return html + nodeHtmls;
@@ -231,7 +232,6 @@ function addRemoveBookmarkListener() {
     closeButtons.forEach(closeButton => {
         closeButton.addEventListener("click", function() {
             var bookmarkId = this.getAttribute("data-id");
-            console.log("bookmarkId", bookmarkId);
             chrome.bookmarks.remove(bookmarkId, function() {
                 searchReload(); // 删除成功后刷新列表
             });
