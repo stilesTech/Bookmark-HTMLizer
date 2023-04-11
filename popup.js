@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    chrome.tabs.create({url: "bookmarks.html",  active: true});
+    chrome.tabs.create({ url: "bookmarks.html", active: true });
 
     var ws = document.getElementById('ws');
 

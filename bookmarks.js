@@ -6,8 +6,6 @@ chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
     // 获取所有标签
     var bookmarks = bookmarkTreeNodes[0];
 
-    console.log(bookmarks);
-
     var bookmarksContents = document.getElementById('bookmarks-contents');
     bookmarks.title = "";
 
@@ -17,11 +15,15 @@ chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
     var bookmarksMark = document.getElementById('bookmarks-mark');
     bookmarksMark.innerHTML = createBookmarkMarks();
 
+    //延迟加载图片
+    lazyLoadImages();
     // 全局设置img onerror事件
     allImgsSetOnErrorEvent();
     //添加滚动事件
     addScrollEventListener();
-
+    //添加移除标签事件
+    addRemoveBookmarkListener();
+    
     // 添加搜索输入框的监听器，根据输入过滤书签
     var searchBox = document.getElementById("searchBox");
     searchBox.addEventListener("click", function() {
@@ -37,8 +39,14 @@ chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
         }
     });
 
-    addRemoveBookmarkListener();
 });
+
+function lazyLoadImages() {
+    const images = document.querySelectorAll(".lazy-image");
+    images.forEach(img => {
+        img.setAttribute("src", img.dataset.src);
+    });
+}
 
 function searchReload() {
     chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
@@ -57,10 +65,14 @@ function searchReload() {
         addSmartIdToParts();
         var bookmarksMark = document.getElementById('bookmarks-mark');
         bookmarksMark.innerHTML = createBookmarkMarks();
+        //延迟加载图片
+        lazyLoadImages();
         // 全局设置img onerror事件
         allImgsSetOnErrorEvent();
-
+        //添加滑动事件
         addScrollEventListener();
+        //添加移除标签事件
+        addRemoveBookmarkListener();
     });
 }
 
@@ -69,6 +81,7 @@ function reloadEmptyHtml() {
     filteredBookmarks.push({
         id: 0,
         title: "没有匹配的书签",
+        isEmpty:true,
         children: [],
     });
     var bookmarksContents = document.getElementById('bookmarks-contents');
@@ -158,11 +171,11 @@ function createBookmarkTree(bookmarks, parentName) {
     let hasHtml = false;
     for (var i = 0; i < bookmarks.children.length; i++) {
         if (bookmarks.children[i].url) {
-            html += `<div class="col-xs-6 col-sm-4 col-md-2"><div class="item"><div class="close-button" data-id="${bookmarks.children[i].id}"></div><a href="${bookmarks.children[i].url}" target="_blank"><img src="${getFaviconIcon(bookmarks.children[i])}" alt="${getTitle(bookmarks.children[i].title)}">
+            html += `<div class="col-xs-6 col-sm-4 col-md-2"><div class="item"><div class="close-button" data-id="${bookmarks.children[i].id}"></div><a href="${bookmarks.children[i].url}" target="_blank" ><img class="lazy-image" loading="lazy" data-src="${getFaviconIcon(bookmarks.children[i])}" src="images/fallback-image.png" alt="${getTitle(bookmarks.children[i].title)}">
             <h3>${getTitle(bookmarks.children[i].title)}</h3>
             <p>${bookmarks.children[i].title}</p>            
             </a></div></div>`;
-            hasHtml=true;
+            hasHtml = true;
         } else {
             nodeHtmls += createBookmarkTree(bookmarks.children[i], bookmarks.title);
         }
@@ -170,7 +183,7 @@ function createBookmarkTree(bookmarks, parentName) {
     html += `</div></div></div>`;
 
     // 过滤元素为空的html
-    if (!hasHtml) {
+    if (!hasHtml && bookmarks.title!="没有匹配的书签") {
         html = "";
     }
     return html + nodeHtmls;
@@ -188,23 +201,26 @@ function createBookmarkMarks() {
 }
 
 function getFaviconIcon(bookmark) {
-    // if (bookmark && bookmark.url) {
-    //     const url = new URL(bookmark.url)
-    //     return url.origin + "/favicon.ico";
-    // }
-    // return "";
-   
-    return "chrome://favicon/size/64@1x/" + bookmark.url;
+    const url = new URL(bookmark.url);
+    if (bookmark && bookmark.url && url.host.indexOf(192.) > -1 || url.host.indexOf(127.) > -1 || url.host.indexOf("localhost") > -1) {
+        return url.origin + "/favicon.ico";
+    } else {
+        return `https://icons.duckduckgo.com/ip3/${url.host}.ico`;
+    }
 }
 
+function isIP(url) {
+    const ipPattern = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/;
+    return ipPattern.test(url);
+}
 
 function fetchFavicon(url) {
     return new Promise(function(resolve, reject) {
         var img = new Image();
-        img.onload = function () {
+        img.onload = function() {
             var canvas = document.createElement("canvas");
-            canvas.width =this.width;
-            canvas.height =this.height;
+            canvas.width = this.width;
+            canvas.height = this.height;
 
             var ctx = canvas.getContext("2d");
             ctx.drawImage(this, 0, 0);
@@ -212,7 +228,9 @@ function fetchFavicon(url) {
             var dataURL = canvas.toDataURL("image/png");
             resolve(dataURL);
         };
-        img.src = 'chrome://favicon/' + url;
+        // img.src = 'chrome://favicon/size/64@1x/' + url;
+        const _url = new URL(url);
+        img.src = `https://icons.duckduckgo.com/ip3/${_url.host}.ico`;
     });
 }
 
@@ -231,7 +249,6 @@ function addRemoveBookmarkListener() {
     closeButtons.forEach(closeButton => {
         closeButton.addEventListener("click", function() {
             var bookmarkId = this.getAttribute("data-id");
-            console.log("bookmarkId", bookmarkId);
             chrome.bookmarks.remove(bookmarkId, function() {
                 searchReload(); // 删除成功后刷新列表
             });

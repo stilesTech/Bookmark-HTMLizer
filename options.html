@@ -4,20 +4,19 @@
 <head>
     <title>Bookmark HTMLizer / 书签HTML生成器</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta http-equiv="Content-Security-Policy"
-        content="script-src 'self';object-src 'self';script-src-elem 'self' 'unsafe-inline' https://platform.twitter.com https://syndication.twitter.com;">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self';object-src 'self';script-src-elem 'self' 'unsafe-inline' https://platform.twitter.com https://syndication.twitter.com;">
     <link rel="stylesheet" href="css/chrome_shared.css" />
     <style>
         body>.main-container {
             max-width: 800px;
             margin: 50px auto
         }
-
+        
         header {
             margin: 0 auto 50px auto;
             font-size: 36px
         }
-
+        
         #status {
             color: green;
         }
@@ -49,14 +48,15 @@
         <h1>Set shortcut keys / 设置快捷键</h1>
         <hr />
         <div>
-            点击配置激活Bookmark HTMLizer快捷键：<a href="#" id="setShortcuts">点击设置（推荐快捷键：Alt+Shift+Q）</a> 
+            点击配置激活Bookmark HTMLizer快捷键：<a href="#" id="setShortcuts">点击设置（当前快捷键：Alt+R）</a>
             <div class="x-tips" style="color: #aaa;margin-top:4px">
                 Tips：使用<b>快捷键</b>，便捷打开Bookmark HTMLizer工具！
             </div>
         </div>
         <br />
         <div>
-            <div>内置快捷键：<strong>Alt+Shift+D</strong> 可以快速在新窗口打开标签页</div>
+            <div>内置快捷键1：<strong>Alt+R</strong> 使用设置的打开方式激活插件</div>
+            <div>内置快捷键2：<strong>Alt+T</strong> 可以快速在新窗口打开标签页</div>
         </div>
         <hr />
         <!-- <br />
@@ -68,22 +68,17 @@
         <div>If you like this extension, please share it with people who may find it useful.</div>
         <div>如果你喜欢这个插件的话，分享给有需要的人吧。</div>
         <br />
-        <div class="social-buttons fr">
-            <a href="https://twitter.com/share" class="twitter-share-button" data-via="stiles_wild"
-                data-text="发现一个超棒的 #浏览器扩展（Bookmark HTMLizer / 书签HTML检索），可以将您的书签内容转换为网页形式，使得您可以更方便地检索和浏览书签内容。"
-                data-related="compzets" data-hashtags="" data-url="https://github.com/stilesTech/bookmark-HTMLizer">share to Tweet</a>
-            <script src="twitter_widgets.js" id="twitter-wjs"></script>
-            <!-- <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script> -->
-        </div>
-        <br />
+        <h1>AbountMe / 关于我</h1>
+        <hr />
         <p>
-			github: <a href="https://github.com/stilesTech" target="_blank">stilesTech</a>
-		</p>
+            Twitter: <a href="https://twitter.com/tiingou" target="_blank">tiing</a>
+        </p>
         <p>
-			blog: <a href="https://stiles.cc" target="_blank">stilesBlog</a>
-		</p>
-        <br />
-        <br />
+            Github: <a href="https://github.com/stilesTech" target="_blank">stilesTech</a>
+        </p>
+        <p>
+            Blog: <a href="https://stiles.cc" target="_blank">stiles.cc</a>
+        </p>
         <div id="status"></div>
     </div>
 

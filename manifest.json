@@ -1,62 +1,76 @@
 {
     "name": "Bookmark HTMLizer",
     "version": "1.0",
-    "manifest_version": 2,
+    "manifest_version": 3,
     "description": "Bookmark HTMLizer可以将您的书签内容转换为网页形式，使得您可以更方便地检索和浏览书签内容。",
     "permissions": [
-        "tabs",
         "activeTab",
         "storage",
         "bookmarks",
         "commands",
-        "favicon",
-        "chrome://favicon/"
+        "favicon"
     ],
-    "host_permissions": [
-        "https://*/*",
-        "http://*/*",
-        "chrome://favicon/*",
-        "chrome://extensions/*"
-    ],
-    "options_page": "options.html",
+    "action": {
+        "default_icon": "images/icon32.png",
+        "default_title": "Bookmark HTMLizer(书签助手)",
+        "default_popup": "bookmarks.html"
+    },
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": true
+    },
     "icons": {
         "16": "images/icon16.png",
         "32": "images/icon32.png",
         "48": "images/icon48.png",
         "128": "images/icon128.png"
     },
-    "content_scripts": [
-        {
-            "matches": [
-                "<all_urls>"
-            ],
-            "js": [
-                "content.js"
-            ]
-        }
+    "host_permissions": [
+        "https://*/*",
+        "http://*/*"
     ],
-    "browser_action": {
-        "default_icon": "images/icon32.png",
-        "default_popup": "bookmarks.html"
-    },
-    "web_accessible_resources": [
-        "images/*",
-        "scripts/*",
-        "styles/*",
-        "bookmarks.html"
-    ],
-    "background": {
-        "scripts": [
-            "background.js"
+    "web_accessible_resources": [{
+        "resources": [
+            "images/fallback-image.png",
+            "images/icon16.png",
+            "images/icon32.png",
+            "images/icon48.png",
+            "images/icon128.png",
+            "images/save.png",
+            "images/search.png",
+            "images/tags.png",
+            "images/website.png",
+            "css/chrome_shared.css",
+            "css/widgets.css",
+            "bookmarks.css",
+            "bookmarks.js",
+            "options.js",
+            "popup.js",
+            "background.js",
+            "*.ico"
+        ],
+        "matches": [
+            "<all_urls>"
         ]
+    }],
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
     },
     "commands": {
         "activate_extension": {
             "suggested_key": {
-                "default": "Alt+Shift+D",
-                "mac": "Alt+Shift+D"
+                "default": "Alt+T"
             },
             "description": "open in new tabs"
+        },
+        "_execute_action": {
+            "suggested_key": {
+                "default": "Alt+R"
+            }
         }
+    },
+    "content_security_policy": {
+        "content_security_policy": "default-src 'self'; img-src https://icons.duckduckgo.com"
     }
 }

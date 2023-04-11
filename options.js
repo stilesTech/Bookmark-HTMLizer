@@ -2,17 +2,17 @@
 function save_options() {
     var modeType = document.querySelector('input[name="mode"]:checked').value;
     if (modeType == 0) {
-        chrome.browserAction.setPopup({ popup: "bookmarks.html" });
+        chrome.action.setPopup({ popup: "bookmarks.html" });
     } else {
-        chrome.browserAction.setPopup({ popup: "popup.html" });
+        chrome.action.setPopup({ popup: "popup.html" });
     }
 
     chrome.storage.local.set({
         modeType: modeType,
-    }, function () {
+    }, function() {
         var status = document.getElementById('status');
         status.textContent = 'Options saved. / 设置已保存';
-        setTimeout(function () {
+        setTimeout(function() {
             status.textContent = '';
         }, 5000);
     });
@@ -23,7 +23,7 @@ function save_options() {
 function restore_options() {
     chrome.storage.local.get({
         modeType: '0',
-    }, function (items) {
+    }, function(items) {
         document.getElementById('mode-' + items.modeType).checked = true;
     });
 }
@@ -36,7 +36,7 @@ function reset_options() {
 document.addEventListener('DOMContentLoaded', function() {
 
     restore_options();
-  
+
     var shortcuts = document.getElementById('setShortcuts');
 
     shortcuts.addEventListener('click', function() {
@@ -51,7 +51,6 @@ for (let index = 0; index < inputs.length; index++) {
 }
 
 // document.getElementById("btnReset").addEventListener('click', reset_options);
-
 
 function openShortcuts() {
     chrome.tabs.create({
