@@ -4,11 +4,9 @@
     "manifest_version": 3,
     "description": "Bookmark HTMLizer可以将您的书签内容转换为网页形式，使得您可以更方便地检索和浏览书签内容。",
     "permissions": [
-        "activeTab",
         "storage",
         "bookmarks",
-        "commands",
-        "favicon"
+        "commands"
     ],
     "action": {
         "default_icon": "images/icon32.png",
@@ -69,8 +67,5 @@
                 "default": "Alt+R"
             }
         }
-    },
-    "content_security_policy": {
-        "content_security_policy": "default-src 'self'; img-src https://icons.duckduckgo.com"
     }
 }
