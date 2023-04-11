@@ -1,9 +1,11 @@
 # Bookmark HTMLizer / 书签HTML检索
 
 Bookmark HTMLizer可以将您的书签内容转换为网页形式，使得您可以更方便地检索和浏览书签内容。
+
 Bookmark HTMLizer can convert bookmark content into webpage format, allowing you to easily search and browse your bookmarks.
 
 1:Quickly search bookmarks/快速搜索书签.
+
 2:Manage bookmark content/管理书签内容.
 
 > 推荐使用v2版本的分支，v2版本支持chrome://favicon 的方式读取书签icon，最新V3版本不支持。
